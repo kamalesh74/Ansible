@@ -109,6 +109,8 @@ Option 1 — using the dedicated MySQL module (preferred answer):
         state: present
       no_log: true
 
+
+Yes, exactly — it creates the database on the target host (whatever machine is in your hosts: appservers group in the inventory), not on your control node (the machine you're running ansible-playbook from).
 --
 #ansible-playbook -i inventory.ini playbook.yml --ask-vault-pass
 
