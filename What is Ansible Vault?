@@ -80,16 +80,44 @@ db_password: !vault |
 ecr_token: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   encrypted...
+----------------------------------------
+#ansible-vault create secrets.yml
+
+Yes — by default, ansible-vault create secrets.yml will prompt you interactively for a password, twice (to confirm):
+
+New Vault password: 
+Confirm New Vault password:
+
+After you enter and confirm it, it opens your default editor (usually vi, or whatever $EDITOR is set to) so you can type the plaintext content. Once you save and exit the editor, Ansible encrypts the file using that password.
+
 
 # playbook.yml
+Option 1 — using the dedicated MySQL module (preferred answer):
+
+---
 - name: deploy app
   hosts: appservers
   vars_files:
-    - secrets.yml        # loads encrypted secrets
+    - secrets.yml
 
   tasks:
     - name: connect to db
-      shell: mysql -u admin -p{{ db_password }} mydb
+      community.mysql.mysql_db:
+        login_user: admin
+        login_password: "{{ db_password }}"
+        name: mydb
+        state: present
+      no_log: true
+
+--
+#ansible-playbook -i inventory.ini playbook.yml --ask-vault-pass
+
+Yes — --ask-vault-pass explicitly tells Ansible to prompt you interactively for the vault password before running the playbook:
+
+Vault password:
+
+You type the same password you used when creating/encrypting secrets.yml, hit enter, and then the playbook proceeds normally — Ansible decrypts the vaulted content in memory using that password.
+
 
 --------------------------
 Practical
