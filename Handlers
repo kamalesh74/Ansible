@@ -40,6 +40,8 @@ handlers:
 
 How it works:
 
+The name after notify: must exactly match the name: field of the handler — word for word, case-sensitive. It's not a command, it's just a string that acts like a lookup key.
+
 Copy config → file changed?
       ├── YES → notify handler → restart nginx ✅
       └── NO  → skip handler → no restart ✅
