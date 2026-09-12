@@ -102,7 +102,7 @@ Option 1 — using the dedicated MySQL module (preferred answer):
 
   tasks:
     - name: connect to db
-      community.mysql.mysql_db:
+      community.mysql.mysql_db:        // This playbook does use a module — community.mysql.mysql_db. That's the one doing the actual work of connecting to MySQL and ensuring the mydb database exists.
         login_user: admin
         login_password: "{{ db_password }}"
         name: mydb
