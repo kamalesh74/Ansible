@@ -105,7 +105,7 @@ Option 1 — using the dedicated MySQL module (preferred answer):
       community.mysql.mysql_db:        // This playbook does use a module — community.mysql.mysql_db. That's the one doing the actual work of connecting to MySQL and ensuring the mydb database exists.
         login_user: admin
         login_password: "{{ db_password }}"
-        name: mydb
+        name: mydb                    // here only refers to the database name, not a MySQL user, table, or anything else
         state: present
       no_log: true
 
